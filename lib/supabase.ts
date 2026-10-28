@@ -21,9 +21,9 @@ export function createBrowserSupabaseClient() {
   return createBrowserClient(url, key);
 }
 
-export function createServerSupabaseClient() {
+export async function createServerSupabaseClient() {
   const { url, key } = getSupabaseConfig();
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   return createServerClient(url, key, {
     cookies: {
       getAll() {

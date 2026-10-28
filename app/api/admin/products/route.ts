@@ -3,7 +3,7 @@ import { createServerSupabaseClient } from '@/lib/supabase';
 import { productSchema } from '@/lib/validation';
 
 async function requireApiAdmin() {
-  const supabase = createServerSupabaseClient();
+  const supabase = await createServerSupabaseClient();
   const { data: userData } = await supabase.auth.getUser();
   if (!userData.user) return { supabase, response: NextResponse.json({ error: 'Authentication required.' }, { status: 401 }) };
   const { data: admin } = await supabase.from('admin_users').select('user_id').eq('user_id', userData.user.id).maybeSingle();

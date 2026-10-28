@@ -6,7 +6,7 @@ export async function POST(request: Request) {
   try {
     const parsed = adminLoginSchema.safeParse(await request.json());
     if (!parsed.success) return NextResponse.json({ error: parsed.error.issues[0]?.message ?? 'Check your credentials.' }, { status: 400 });
-    const supabase = createServerSupabaseClient();
+    const supabase = await createServerSupabaseClient();
     const { data, error } = await supabase.auth.signInWithPassword(parsed.data);
     if (error || !data.user) return NextResponse.json({ error: 'Email or password was not accepted.' }, { status: 401 });
     const { data: admin } = await supabase.from('admin_users').select('user_id').eq('user_id', data.user.id).maybeSingle();

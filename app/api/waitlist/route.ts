@@ -7,7 +7,7 @@ export async function POST(request: Request) {
     const body: unknown = await request.json();
     const parsed = waitlistSchema.safeParse(body);
     if (!parsed.success) return NextResponse.json({ error: parsed.error.issues[0]?.message ?? 'Invalid waitlist submission.' }, { status: 400 });
-    const supabase = createServerSupabaseClient();
+    const supabase = await createServerSupabaseClient();
     const { error } = await supabase.rpc('submit_waitlist', { p_product_id: parsed.data.product_id, p_email: parsed.data.email });
     if (error?.code === '23505') return NextResponse.json({ error: 'That email is already on this product’s waitlist.' }, { status: 409 });
     if (error?.code === 'P0002') return NextResponse.json({ error: 'That product is no longer available.' }, { status: 404 });

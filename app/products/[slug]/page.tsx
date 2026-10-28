@@ -11,13 +11,15 @@ import { getProductBySlug } from '@/lib/data';
 
 export const dynamic = 'force-dynamic';
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const { product } = await getProductBySlug(params.slug);
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const { product } = await getProductBySlug(slug);
   return { title: product ? `${product.name} — SneakerDrop` : 'Product — SneakerDrop', description: product?.description };
 }
 
-export default async function ProductDetailPage({ params }: { params: { slug: string } }) {
-  const { product, error } = await getProductBySlug(params.slug);
+export default async function ProductDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const { product, error } = await getProductBySlug(slug);
   if (!product && !error) notFound();
   if (!product) return <main className="min-h-screen bg-paper p-10"><p className="font-mono text-sm text-rust">{error ?? 'Product not found.'}</p></main>;
   const isWaitlist = product.availability === 'coming_soon' || product.availability === 'low_stock';

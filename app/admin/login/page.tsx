@@ -2,7 +2,8 @@ import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { AdminLoginForm } from '@/components/admin-login-form';
 
-export default function AdminLoginPage({ searchParams }: { searchParams: { error?: string } }) {
-  const initialError = searchParams.error === 'not-authorized' ? 'Your account is authenticated but is not provisioned as an administrator.' : undefined;
+export default async function AdminLoginPage({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
+  const params = await searchParams;
+  const initialError = params.error === 'not-authorized' ? 'Your account is authenticated but is not provisioned as an administrator.' : undefined;
   return <main className="grid min-h-screen bg-ink text-paper md:grid-cols-[0.82fr_1.18fr]"><section className="hidden border-r border-paper/15 p-10 md:flex md:flex-col md:justify-between"><Link href="/" className="flex items-center gap-2"><span className="flex h-7 w-7 items-center justify-center bg-lime font-mono text-[11px] text-ink">{'//'}</span><span className="text-[15px] font-bold uppercase tracking-[0.12em]">SneakerDrop</span></Link><div><p className="eyebrow text-lime">Private desk / 002</p><h1 className="display mt-5 max-w-[8ch] text-7xl font-bold">Keep the edit exact.</h1></div><p className="font-mono text-[10px] uppercase tracking-[0.14em] text-paper/35">Supabase Auth / role verified server-side</p></section><section className="flex flex-col justify-center px-6 py-12 sm:px-14"><div className="mx-auto w-full max-w-[430px]"><Link href="/" className="eyebrow inline-flex items-center gap-3 text-paper/55 hover:text-lime"><ArrowLeft size={14} /> Back to public site</Link><div className="mt-16"><p className="eyebrow text-lime">Administrator access</p><h2 className="display mt-4 text-5xl font-bold">Sign in to the desk.</h2><p className="mt-5 max-w-[38ch] text-sm leading-6 text-paper/55">Use an existing Supabase Auth account provisioned in the `admin_users` table. There is no public administrator signup.</p><AdminLoginForm initialError={initialError} /></div></div></section></main>;
 }
