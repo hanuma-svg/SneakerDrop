@@ -135,15 +135,17 @@ The following checks were run against the local app and the connected Supabase p
 - The same email for the same product returned HTTP 409 after normalization.
 - The same normalized email for a different product returned HTTP 201.
 - Anonymous direct REST access to `waitlist` returned HTTP 401/permission denied.
-- The unauthenticated `/admin` request produced a Next redirect payload to `/admin/login`; an actual administrator login was not executed because no admin Auth credentials were provided.
+- The unauthenticated `/admin` request produced a Next redirect payload to `/admin/login`; production `POST`, `PATCH`, and `DELETE` admin mutation requests returned HTTP 401. An actual administrator login was not executed because no admin Auth credentials were provided.
 - The Supabase project reports RLS enabled for `products`, `admin_users`, and `waitlist`, with three product rows and two QA waitlist rows from the behavior test.
-- Screenshots were captured at 1366px and 375px widths. The route set was visually checked for responsive navigation, card stacking, readable forms, and no horizontal overflow.
+- Production browser inspection found no console output/errors and Vercel reported no grouped runtime errors in the verification window. Screenshots were captured at 1366px and 375px widths. The route set was visually checked for responsive navigation, card stacking, readable forms, and no horizontal overflow.
 
 The two QA rows use the synthetic address `qa20261028@example.com` for the two waitlist behavior checks. They are not customer data. Remove them from the Supabase dashboard if a clean database is required before evaluation.
 
 ## Deployment status
 
-The working application and README are ready for GitHub/Vercel connection. No GitHub repository or Vercel URL is claimed here until the corresponding account authorizations and production environment variables are confirmed. Before production, configure the two `NEXT_PUBLIC_SUPABASE_*` variables in the Vercel Production environment, apply the SQL migrations/seed to the intended Supabase project, provision an administrator, deploy the GitHub production branch, and re-run the public catalogue, waitlist, admin authentication, and CRUD checks against the real Vercel URL.
+The application is pushed to the requested public GitHub repository: https://github.com/hanuma-svg/SneakerDrop. The verified production commit is `484b4d577171a996c520109456a1a5c173dd745f` (`Merge existing GitHub repository history`). The Vercel project is connected to `hanuma-svg/SneakerDrop` on `main` and the verified production URL is https://sneakerdrop-pi.vercel.app/.
+
+Vercel Production, Preview, and Development contain `NEXT_PUBLIC_SUPABASE_URL` and the encrypted `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`. The URL is `https://xdgdrivkqvnnxyfvmwaa.supabase.co`, matching the Supabase project ref where the migrations and seed data were applied. The production redeploy completed with `READY` status from commit `484b4d5…`. Public production catalogue, product detail, availability, waitlist validation/persistence/duplicate handling, protected-route behavior, browser console, and Vercel runtime-error checks were executed successfully. Authenticated admin login, CRUD, and admin waitlist viewing remain unverified because no provisioned administrator credentials were supplied; provision one using the instructions above, then repeat those checks against the live URL.
 
 ## Known limitations and future improvements
 

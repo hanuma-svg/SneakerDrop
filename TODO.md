@@ -54,7 +54,8 @@
 - [x] The actual site is inspected at approximately 375px and 1366px for overflow, navigation, imagery, forms, spacing, contrast, keyboard-friendly controls, and layout shifts. The implemented responsive CSS also covers 430px, 768px, and 1440px breakpoints.
 - [x] Supabase catalogue retrieval, three public products, product details/images/availability, waitlist persistence, malformed emails, duplicate prevention, cross-product reuse, and anonymous read protection were verified where credentials permit.
 - [x] Unauthorized protected-route behavior was checked; privileged credentials are absent from client bundles, Git history, and public files.
-- [ ] The complete project is not yet pushed to the requested public GitHub repository; the project still uses the Manus-managed repository until GitHub authorization is completed.
-- [ ] The application is not yet deployed to Vercel and no live URL is claimed. Production environment variables and the intended Supabase endpoint still need to be configured after repository authorization.
+- [x] The complete project is pushed to the requested public GitHub repository `https://github.com/hanuma-svg/SneakerDrop` at verified commit `484b4d577171a996c520109456a1a5c173dd745f`.
+- [x] The application is deployed to Vercel at `https://sneakerdrop-pi.vercel.app/` with the two required Supabase environment variables configured for Production, Preview, and Development; the redeployment reached READY status.
+- [ ] Authenticated administrator login, product CRUD, availability mutation, and admin waitlist viewing remain unverified because no provisioned administrator credentials were supplied. Unauthenticated route and mutation rejection checks passed.
 - [x] README documents overview, purpose, features, stack, implemented screenshots, current live-link status, repository status, local setup, environment variables, Supabase schema/migrations/admin provisioning/RLS, architecture, CRUD, waitlist duplicate prevention, actual test results, limitations, and future improvements.
 - [x] Remaining unverified items, the Supabase endpoint mismatch, and required manual actions are explicitly disclosed rather than fabricated.
