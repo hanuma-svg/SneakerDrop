@@ -1,0 +1,9 @@
+{
+  "routes": [
+    { "path": "/", "title": "SneakerDrop" },
+    { "path": "/catalogue", "title": "Catalogue" },
+    { "path": "/products/:slug", "title": "Product detail" },
+    { "path": "/admin/login", "title": "Admin login" },
+    { "path": "/admin", "title": "Admin dashboard" }
+  ]
+}
