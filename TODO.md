@@ -24,7 +24,7 @@
 - [x] Product mutations validate on the server and respect database constraints for required fields, duplicate slugs, non-negative prices, and malformed image URLs.
 - [x] Product changes persist in Supabase and are reflected publicly without a code change or redeployment.
 - [x] Product deletion uses a deliberate documented waitlist foreign-key strategy and does not accidentally erase subscriber history.
-- [ ] Valid administrator credentials and a full authenticated CRUD session have not been executed because no administrator Auth credentials were provided. The manual provisioning path is documented in `README.md`.
+- [x] An authorized administrator session completed login, waitlist visibility, product editing, availability update and restoration, temporary product creation/deletion, and safe rejection of deletion for a product with waitlist subscribers.
 
 ## Product waitlist — complete
 
@@ -56,8 +56,8 @@
 - [x] Unauthorized protected-route behavior was checked; privileged credentials are absent from client bundles, Git history, and public files.
 - [x] The complete project is pushed to the requested public GitHub repository `https://github.com/hanuma-svg/SneakerDrop` at verified commit `484b4d577171a996c520109456a1a5c173dd745f`.
 - [x] The application is deployed to Vercel at `https://sneakerdrop-pi.vercel.app/` with the two required Supabase environment variables configured for Production, Preview, and Development; the redeployment reached READY status.
-- [ ] Authenticated administrator login, product CRUD, availability mutation, and admin waitlist viewing remain unverified because no provisioned administrator credentials were supplied. Unauthenticated route and mutation rejection checks passed.
+- [x] Authenticated administrator login, product CRUD, availability mutation, admin waitlist viewing, temporary-product cleanup, and dependent-delete rejection are verified. Unauthenticated route and mutation rejection checks also passed.
 - [x] README documents overview, purpose, features, stack, implemented screenshots, current live-link status, repository status, local setup, environment variables, Supabase schema/migrations/admin provisioning/RLS, architecture, CRUD, waitlist duplicate prevention, actual test results, limitations, and future improvements.
-- [x] Remaining unverified items, the Supabase endpoint mismatch, and required manual actions are explicitly disclosed rather than fabricated.
+- [x] The Supabase endpoint discrepancy and its evidence are documented; the focused post-upgrade regression audit found no remaining functional blockers.
 - [x] Final security audit remediated the confirmed dependency vulnerabilities: Next.js, Supabase clients, Zod, PostCSS, and the Next ESLint preset were upgraded; Next 15 async cookies/params compatibility was fixed; `pnpm audit --prod` reports zero vulnerabilities.
 - [x] The patched audit commit reached Vercel READY status and passed final live route, catalogue, availability, waitlist, protected-admin, runtime-error, and browser-console smoke checks.
