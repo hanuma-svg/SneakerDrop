@@ -16,7 +16,7 @@
 - [x] Products have appropriate constraints, indexes, timestamp handling, and public read policies; only authorized administrators can insert, update, or delete them.
 - [x] Catalogue database errors do not silently fall back to fake product data.
 
-## Secure administrator and product management — implemented; credential verification pending
+## Secure administrator and product management — complete
 
 - [x] `/admin` uses Supabase Auth for administrator sign-in, session-aware protected routes, secure logout, useful authentication errors, and server-side authorization checks.
 - [x] Anonymous visitors cannot grant themselves administrator privileges; administrator authorization is provisioned through a dedicated role table or equivalent server-verified mechanism and documented for manual first-admin provisioning.
@@ -34,11 +34,11 @@
 - [x] The same normalized email can join different products while the same email cannot join the same product twice; database uniqueness errors are handled gracefully.
 - [x] The application does not claim confirmation emails are sent because no email delivery service is configured.
 
-## Protected waitlist management — implemented; authenticated verification pending
+## Protected waitlist management — complete
 
 - [x] Authorized administrators can view submitted emails, associated sneakers, timestamps, and clear loading/empty/error states, with practical search/filter behavior.
 - [x] Anonymous visitors cannot retrieve the full subscriber list through the browser, API, direct Supabase queries, page source, logs, or public error messages; direct anonymous REST access returned permission denied.
-- [ ] An authenticated administrator waitlist view has not been exercised because no administrator Auth credentials were provided.
+- [x] An authenticated administrator waitlist view was exercised successfully during the subsequent production regression session.
 
 ## Database, environment, and code quality — complete
 
@@ -48,13 +48,13 @@
 - [x] The TypeScript project uses strict type checking, reusable components/modules, semantic HTML, accessible labels and focus states, server-side validation, and no unnecessary `any` types.
 - [x] `public/manus-routes.json`, project metadata, README, and code are synchronized with the implemented routes and architecture.
 
-## Verification and delivery — local complete; external delivery pending
+## Verification and delivery — complete
 
 - [x] Dependencies install successfully; linting, TypeScript checks, and the production build pass with important warnings resolved.
 - [x] The actual site is inspected at approximately 375px and 1366px for overflow, navigation, imagery, forms, spacing, contrast, keyboard-friendly controls, and layout shifts. The implemented responsive CSS also covers 430px, 768px, and 1440px breakpoints.
 - [x] Supabase catalogue retrieval, three public products, product details/images/availability, waitlist persistence, malformed emails, duplicate prevention, cross-product reuse, and anonymous read protection were verified where credentials permit.
 - [x] Unauthorized protected-route behavior was checked; privileged credentials are absent from client bundles, Git history, and public files.
-- [x] The complete project is pushed to the requested public GitHub repository `https://github.com/hanuma-svg/SneakerDrop` at verified commit `484b4d577171a996c520109456a1a5c173dd745f`.
+- [x] The application code/security-remediation commit `66eb8815227309e0c882b264b601faf50a06a2af` and subsequent documentation-only audit commits are pushed to the requested public GitHub repository `https://github.com/hanuma-svg/SneakerDrop`.
 - [x] The application is deployed to Vercel at `https://sneakerdrop-pi.vercel.app/` with the two required Supabase environment variables configured for Production, Preview, and Development; the redeployment reached READY status.
 - [x] Authenticated administrator login, product CRUD, availability mutation, admin waitlist viewing, temporary-product cleanup, and dependent-delete rejection are verified. Unauthenticated route and mutation rejection checks also passed.
 - [x] README documents overview, purpose, features, stack, implemented screenshots, current live-link status, repository status, local setup, environment variables, Supabase schema/migrations/admin provisioning/RLS, architecture, CRUD, waitlist duplicate prevention, actual test results, limitations, and future improvements.

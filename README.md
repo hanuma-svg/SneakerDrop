@@ -121,7 +121,7 @@ The product detail page shows a product-specific form for low-stock and coming-s
 
 ## Verification performed
 
-The following checks were run against the local app and the connected Supabase project:
+The initial/pre-authenticated audit and connected Supabase checks included:
 
 - `pnpm install` completed successfully with the pinned lockfile.
 - `pnpm typecheck` passed.
@@ -136,7 +136,12 @@ The following checks were run against the local app and the connected Supabase p
 - The same email for the same product returned HTTP 409 after normalization.
 - The same normalized email for a different product returned HTTP 201.
 - Anonymous direct REST access to `waitlist` returned HTTP 401/permission denied.
-- The unauthenticated `/admin` request redirected to `/admin/login`; production `POST`, `PATCH`, and `DELETE` admin mutation requests returned HTTP 401. An authorized administrator session then logged in successfully, viewed the waitlist, edited and restored Sole Signal 01, changed and restored its availability, created and deleted a clearly labeled temporary product, and received safe rejection when attempting to delete a product with waitlist subscribers.
+- The unauthenticated `/admin` request redirected to `/admin/login`; production `POST`, `PATCH`, and `DELETE` admin mutation requests returned HTTP 401.
+
+### Subsequent authenticated production regression
+
+After the initial audit, an authorized administrator session logged in successfully, viewed the waitlist, edited and restored Sole Signal 01, changed and restored its availability, created and deleted a clearly labeled temporary product, and received safe rejection when attempting to delete a product with waitlist subscribers. This later session resolves the initial audit’s credential-access limitation; administrator login and CRUD are verified in the current submission state.
+
 - The Supabase project reports RLS enabled for `products`, `admin_users`, and `waitlist`. The final regression state retained three original product rows and eight waitlist rows; the increase from the pre-audit count reflects synthetic QA submissions, not deletion or modification of existing subscriber records.
 - Production browser inspection found no console output/errors and Vercel reported no grouped runtime errors in the verification window. Screenshots were captured at 1366px and 375px widths. The route set was visually checked for responsive navigation, card stacking, readable forms, and no horizontal overflow.
 
@@ -146,7 +151,7 @@ The regression audit used synthetic `qa-*` addresses. They are not customer data
 
 The application is pushed to the requested public GitHub repository: https://github.com/hanuma-svg/SneakerDrop. The application code and security-remediation commit is `66eb8815227309e0c882b264b601faf50a06a2af` (`Harden dependencies and complete production audit`), deployed READY as `dpl_BXSKB1bufj2N5bGAZwkePMDBu3o8`. The later commits `c2215f73ec19cbd22ba3116262f51bb8b6e2f8e2` and `583a0ff112fcfc73dd89f314e5029ea00128c062` are documentation-only audit evidence updates; they did not change application code, database data, authentication, or security policies. The Vercel project is connected to `hanuma-svg/SneakerDrop` on `main` and the verified production URL is https://sneakerdrop-pi.vercel.app/.
 
-Vercel Production, Preview, and Development contain `NEXT_PUBLIC_SUPABASE_URL` and the encrypted `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`. The URL is `https://xdgdrivkqvnnxyfvmwaa.supabase.co`, matching the Supabase project ref where the migrations and seed data were applied. The audited production commit `c2215f73ec19cbd22ba3116262f51bb8b6e2f8e2` completed with `READY` status. Public production catalogue, product detail, availability, waitlist validation/persistence/duplicate handling, protected-route behavior, browser console, and Vercel runtime-error checks were executed successfully. An authenticated administrator session also successfully logged in, viewed the waitlist, edited and restored Sole Signal 01, changed and restored availability, created and deleted a clearly labeled temporary product, and received safe rejection when attempting to delete a product with waitlist subscribers.
+Vercel Production, Preview, and Development contain `NEXT_PUBLIC_SUPABASE_URL` and the encrypted `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`. The URL is `https://xdgdrivkqvnnxyfvmwaa.supabase.co`, matching the Supabase project ref where the migrations and seed data were applied. The documentation-only audit commit `c2215f73ec19cbd22ba3116262f51bb8b6e2f8e2` completed with `READY` status. Public production catalogue, product detail, availability, waitlist validation/persistence/duplicate handling, protected-route behavior, browser console, and Vercel runtime-error checks were executed successfully. The subsequent authenticated regression is documented above and is also recorded in the later documentation-only commit `583a0ff112fcfc73dd89f314e5029ea00128c062`.
 
 The final production audit found and fixed a dependency vulnerability set before the application code commit above was deployed: Next.js was upgraded to `15.5.28`, `@supabase/ssr` to `0.12.7`, `@supabase/supabase-js` to `2.118.0`, Zod to `4.6.6`, PostCSS to `8.5.23`, and the Next ESLint preset to `15.5.28`. Next 15 compatibility fixes use async cookies, async route params, and async search params without changing the application architecture. `pnpm audit --prod` reports zero low, moderate, high, or critical vulnerabilities. The later documentation-only commits preserved the same deployed application behavior and recorded the authenticated admin regression results.
 
