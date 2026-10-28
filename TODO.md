@@ -60,4 +60,4 @@
 - [x] README documents overview, purpose, features, stack, implemented screenshots, current live-link status, repository status, local setup, environment variables, Supabase schema/migrations/admin provisioning/RLS, architecture, CRUD, waitlist duplicate prevention, actual test results, limitations, and future improvements.
 - [x] Remaining unverified items, the Supabase endpoint mismatch, and required manual actions are explicitly disclosed rather than fabricated.
 - [x] Final security audit remediated the confirmed dependency vulnerabilities: Next.js, Supabase clients, Zod, PostCSS, and the Next ESLint preset were upgraded; Next 15 async cookies/params compatibility was fixed; `pnpm audit --prod` reports zero vulnerabilities.
-- [ ] The patched audit commit still needs its Vercel production deployment to reach READY and receive a final live smoke test; the previously deployed commit was verified before this audit remediation.
+- [x] The patched audit commit reached Vercel READY status and passed final live route, catalogue, availability, waitlist, protected-admin, runtime-error, and browser-console smoke checks.
