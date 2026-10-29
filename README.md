@@ -99,6 +99,17 @@ on conflict (user_id) do nothing;
 
 The browser-facing UI is not the authorization boundary. Route handlers and database policies both verify the authenticated user and administrator role.
 
+## Recruiter demo access
+
+The public administrator login page includes a clearly labeled **Recruiter Demo Access** section for evaluation: [https://sneakerdrop-pi.vercel.app/admin/login](https://sneakerdrop-pi.vercel.app/admin/login). The existing demo account can be used to explore the protected dashboard:
+
+```text
+Email:    sneakerdrop.demo@gmail.com
+Password: SneakerDemo#2026
+```
+
+The page displays both values as readable text and provides a separate copy-to-clipboard button for each credential. This is intentionally public demo access for the internship evaluation; it does not create a new account or change Supabase Auth, administrator authorization, database schemas, or RLS policies.
+
 ## Authentication and RLS security
 
 Products are publicly readable through a narrow select policy. Product insert, update, and delete operations require an authenticated user for whom `is_admin()` is true. `admin_users` is readable only by an authenticated user for their own role row; it has no public write policy. `waitlist` has no public table select or insert privilege. Public submissions call the `submit_waitlist(product_id, email)` security-definer function, which checks that the product exists, normalizes the email, validates it again at the database boundary, and inserts it subject to the unique constraint. Waitlist reads are restricted to authorized administrators.
